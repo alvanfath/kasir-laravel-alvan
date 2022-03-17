@@ -224,7 +224,7 @@
                     dataType: "JSON",
                     success: function(data)
                     {
-                    console.log(data);`
+                    console.log(data);
                     $('input[name="nama"]').val(data.nama);
                     $('input[name="username"]').val(data.username);
                     $('select[name="role"] option:selected').text(data.role);
