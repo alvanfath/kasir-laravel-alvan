@@ -10,7 +10,7 @@
 
     <title>Print laporan</title>
   </head>
-  <body>
+  <body onload="window.print();">
     <h3 class="text-center">Laporan Dari {{$from}} Sampai {{$to}}</h3>
     <br>
     <table class="table table-striped">
@@ -33,7 +33,7 @@
         <td>{{ number_format($r->jumlah) }}</td>
         <td>RP.{{ number_format($r->total_harga) }}</td>
         <td>{{ $r->nama_pegawai}}</td>
-        <td>{{ $r->tanggal}}</td> 
+        <td>{{ $r->tanggal}}</td>
       </tr>
       @endforeach
     </table>
