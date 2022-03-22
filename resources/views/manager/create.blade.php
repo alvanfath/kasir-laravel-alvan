@@ -9,19 +9,19 @@
         <div class="modal-body">
             <div class="mb-3">
                 <label for="name" class="form-label">Nama Menu :</label>
-                <input type="text" class="form-control w-100" style="border-style: groove;" name="nama_menu" id="name" required>
+                <input type="text" class="form-control w-100" style="border-style: groove;" name="nama_menu"  required>
             </div>
             <div class="mb-3">
                 <label for="harga" class="form-label">Harga :</label>
-                <input type="number" class="form-control w-100" style="border-style: groove;" name="harga" id="harga" required>
+                <input type="number" class="form-control w-100" style="border-style: groove;" name="harga"  required>
             </div>
             <div class="mb-3">
                 <label for="deskripsi" class="form-label">Deskripsi :</label>
-                <textarea class="form-control w-100" id="deskripsi" style="border-style: groove;" name="deskripsi" rows="3"></textarea>
+                <textarea class="form-control w-100"  style="border-style: groove;" name="deskripsi" rows="3"></textarea>
             </div>
             <div class="mb-3">
                 <label for="ketersediaan" class="form-label">ketersediaan :</label>
-                <input type="number" class="form-control w-100" style="border-style: groove;" name="ketersediaan" min="1" id="ketersediaan" required>
+                <input type="number" class="form-control w-100" style="border-style: groove;" name="ketersediaan" min="1" required>
             </div>
             </div>
         <div class="modal-footer">

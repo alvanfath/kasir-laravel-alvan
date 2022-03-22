@@ -9,19 +9,20 @@
         <div class="modal-body">
             <div class="mb-3">
                 <label for="name" class="form-label">Nama :</label>
-                <input type="text" class="form-control w-100" style="border-style: groove;" name="nama" id="name" required>
+                <input type="text" class="form-control w-100" style="border-style: groove;" name="nama" required>
             </div>
             <div class="mb-3">
                 <label for="username" class="form-label">Username :</label>
-                <input type="text" class="form-control w-100" name="username" style="border-style: groove;" id="username" required>
+                <input type="text" class="form-control w-100" name="username" style="border-style: groove;"  required>
             </div>
             <div class="mb-3">
                 <label for="password" class="form-label">Password :</label>
-                <input type="password" class="form-control w-100" name="password" style="border-style: groove;" id="password" required>
+                <input type="password" class="form-control w-100" name="password" style="border-style: groove;" required>
             </div>
             <div class="mb-3">
                 <label for="role" class="form-label">Role :</label>
-                <select class="form-select w-100" name="role" id="role" style="border-style: groove;" aria-label="Default select example">
+                <select class="form-select w-100" name="role" style="border-style: groove;" aria-label="Default select example">
+                    <option disabled selected >Pilih Role</option>
                     <option value="admin">Admin</option>
                     <option value="manager">Manager</option>
                     <option value="kasir">Kasir</option>

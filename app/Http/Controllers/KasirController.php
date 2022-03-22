@@ -111,7 +111,4 @@ class KasirController extends Controller
             return back();
         }
     }
-
-
-
 }
