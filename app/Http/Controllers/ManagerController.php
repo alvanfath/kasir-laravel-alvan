@@ -15,8 +15,8 @@ class ManagerController extends Controller
     {
         $menu = Menu::all();
         $stok = Menu::where('ketersediaan', '<=', 1)->get();
-        
-        
+
+
         return view('manager.index', compact('menu','stok'));
     }
 
@@ -55,11 +55,11 @@ class ManagerController extends Controller
         $data = Menu::findOrFail($request->get('id'));
         echo json_encode($data);
     }
-    
+
     public function updatem(Request $request)
     {
         $data= Menu::find($request->id);
-        
+
         $store= $data->update($request->all());
 
         if($store){
@@ -75,7 +75,7 @@ class ManagerController extends Controller
     {
         $data= Menu::find($id);
         $delete= $data->delete();
-        
+
         if($delete){
         return redirect()->route('indexm')
         ->with('success','Berhasil Menghapus!');

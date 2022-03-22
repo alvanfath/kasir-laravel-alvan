@@ -53,11 +53,12 @@ Route::group(['middleware' => ['auth','cek_role:manager']], function(){
 });
 
 //kasir
-Route::group(['middleware' => ['auth','cek_role:kasir']], function(){ 
+Route::group(['middleware' => ['auth','cek_role:kasir']], function(){
     Route::get('indexk',[KasirController::class, 'indexk'])->name('indexk');
     Route::post('storek',[KasirController::class, 'storek'])->name('storek');
     Route::get('destroyt/{id}',[KasirController::class, 'destroyt'])->name('destroyt');
-    Route::get('menu',[KasirController::class, 'menu'])->name('menu');
+    Route::get('editk',[KasirController::class, 'edit'])->name('editk');
+    Route::put('updatek',[KasirController::class, 'update'])->name('updatek');
 });
 
 //login

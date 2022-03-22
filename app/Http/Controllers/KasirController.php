@@ -13,7 +13,7 @@ class KasirController extends Controller
 {
     public function indexk()
     {
-        $trans = Transaksi::latest()->get();
+        $trans = Transaksi::orderBy('bayar', 'asc')->get();
         $menu= Menu::all();
         return view('kasir.index', compact('trans','menu'));
     }
@@ -38,9 +38,9 @@ class KasirController extends Controller
         if(!$menu){
             return back()->with('error', 'menu tidak ada');
         }
-        
+
         $valid= $menu->ketersediaan < $request->jumlah;
-        
+
         if($valid){
             Alert::warning('warning', 'Maaf Menu sudah habis');
             return back()->with('warning','Maaf '. $request->nama_pelanggan. ' Menu '. $request->nama_menu.' Hanya Tersisa: '  .$menu->ketersediaan);
@@ -58,27 +58,51 @@ class KasirController extends Controller
                 'ketersediaan' => $menu->ketersediaan - $request->jumlah,
             ]);
             return redirect()->route('indexk')
-            ->with('success',  
-             'Nama pelanggan: '. $request->nama_pelanggan.
+            ->with('success',
+             'Customer: '. $request->nama_pelanggan.
              '<br>'.
-             'menu: '. $request->nama_menu.
+             'Menu: '. $request->nama_menu.
              '<br>'.
              'Harga: RP. '. number_format($menu->harga).
              '<br>'.
-             'Jumlah: '. number_format($request->jumlah). 
+             'Jumlah: '. number_format($request->jumlah).
              '<br>'.
-             'Total: RP.'. number_format($menu->harga * $request->jumlah). 
+             'Total: RP. '. number_format($menu->harga * $request->jumlah).
              '<br>'.
-             'Nama Pegawai: '. auth()->user()->nama,
-             
+             'Pegawai: '. auth()->user()->nama,
         );
         }
+    }
+    public function edit(Request $request)
+    {
+        $data = Transaksi::findOrFail($request->get('id'));
+        echo json_encode($data);
+    }
+
+    public function update(Request $request){
+        $data = Transaksi::findOrFail($request->id);
+        $valid= $request->bayar < $data->total_harga;
+        if($valid){
+            Alert::warning('Maaf', 'Dana Anda kurang');
+            return back();
+        }else{
+            $data->update([
+                'bayar' => (int) $request->bayar,
+                'kembalian' => (int)$request->bayar - $data->total_harga,
+            ]);
+            return redirect()->route('indexk')
+            ->with('success',
+             'Tunai: '. number_format($request->bayar).
+             '<br>'.
+             'kembalian: '. number_format($data->kembalian),
+            );
+            }
     }
 
     public function destroyt($id){
         $data= Transaksi::find($id);
         $delete= $data->delete();
-        
+
         if($delete){
         return redirect()->route('indexk')
         ->with('success','Berhasil Menghapus!');
@@ -88,11 +112,6 @@ class KasirController extends Controller
         }
     }
 
-    public function menu(){
-        $menu = Menu::paginate(10);
 
-        return view('kasir.menu', compact('menu'));
-    }
 
-    
 }

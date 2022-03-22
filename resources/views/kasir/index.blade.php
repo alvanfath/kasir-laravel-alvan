@@ -25,12 +25,12 @@
         <!-- Topbar header - style you can find in pages.scss -->
         <!-- ============================================================== -->
         @include('layout.top')
-       
-        
+
+
         <!-- Left Sidebar - style you can find in sidebar.scss  -->
         <!-- ============================================================== -->
         @include('layout.sidebar')
-    
+
         <!-- Page wrapper  -->
         <!-- ============================================================== -->
         <div class="page-wrapper" style="min-height: 250px;">
@@ -44,10 +44,18 @@
                     </div>
                     <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
                         <div class="d-flex flex-row-reverse bd-highlight">
+                        <div class="p-2 bd-highlight">
                             <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#add">
                                 <i class="fa-solid fa-plus"></i>
-                                <span class="hide-menu">Add Transaksi</span>
+                                <span class="hide-menu">Tambah Pesanan</span>
                             </button>
+                        </div>
+                        <div class="p-2 bd-highlight">
+                            <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#menu">
+                                <i class="fa-solid fa-bars"></i>
+                                <span class="hide-menu">Daftar Menu</span>
+                            </button>
+                        </div>
                         </div>
                     </div>
                 </div>
@@ -73,12 +81,14 @@
                         <thead class="table-dark">
                             <tr>
                                 <th>No</th>
-                                <th>Nama Pelanggan</th>
-                                <th>Nama Menu</th>
+                                <th>Customer</th>
+                                <th>Menu</th>
                                 <th>Harga</th>
                                 <th>Jumlah</th>
                                 <th>Total</th>
-                                <th>Nama Pegawai</th>
+                                <th>Tunai</th>
+                                <th>Kembalian</th>
+                                <th>Pegawai</th>
                                 <th>Tanggal</th>
                                 <th>Aksi</th>
                             </tr>
@@ -91,58 +101,61 @@
                             <td>RP.{{ number_format($item->harga) }}</td>
                             <td>{{ number_format($item->jumlah) }}</td>
                             <td>RP.{{ number_format($item->total_harga) }}</td>
+                            <td>
+                                @if ($item->bayar == 0)
+
+                                @endif
+
+                                @if ($item->bayar >= $item->total_harga)
+                                    RP.{{ number_format($item->bayar) }}
+                                @endif
+                            </td>
+                            <td>
+                                @if ($item->bayar == 0)
+
+                                @endif
+
+                                @if ($item->bayar >= $item->total_harga)
+                                    RP.{{ number_format($item->kembalian) }}
+                                @endif
+                            </td>
                             <td>{{ $item->nama_pegawai}}</td>
                             <td>{{ $item->tanggal}}</td>
                             <td>
-                            <a href="destroyt/{{ $item->id }}" class="btn btn-danger" onclick="return confirm('are you sure to delete this?')"><i class="fa-solid fa-trash"></i></a>
+
+                            @if ($item->bayar == 0)
+                                <button type="button" class="btn btn-primary edit" data-id="{{$item->id}}">Bayar</button>
+                            @endif
+
+                            @if ($item-> bayar >= $item->total_harga)
+                            <button type="button" class="btn btn-success ">Lunas</button>
+                            @endif
                             </td>
                         </tr>
                         @endforeach
                     </table>
-                                    
+
                 </div>
                 <!-- ============================================================== -->
                 <!-- End PAge Content -->
 
+                {{-- Menu --}}
+                <div class="modal fade" id="menu" tabindex="-1" aria-labelledby="menuLabel" aria-hidden="true">
+                    @include('kasir.menu')
+                  </div>
+                {{-- End Menu --}}
+
                 <!-- Tambah Transaksi -->
                 <div class="modal fade" id="add" tabindex="-1" aria-labelledby="addLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered">
-                        <div class="pop modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="addLabel">Add Menu</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <form action="{{ route('storek')}}" method="POST" enctype="multipart/form-data">
-                        @csrf
-                            <div class="modal-body">
-                                <div class="mb-3">
-                                    <label for="name" class="form-label">Nama Pelanggan :</label>
-                                    <input type="text" class="form-control w-100" style="border-style: groove;" name="nama_pelanggan" id="name" >
-                                </div>
-                                <div class="mb-3">
-                                    <label for="nama_menu" class="form-label">Nama Menu :</label>
-                                    <select class="form-select w-100" style="border-style: groove;" name="nama_menu" id="nama_menu" aria-label="Default select example">
-                                    @foreach($menu as $item)
-                                        <option>
-                                            <tr>{{ $item->nama_menu }}<tr>                                        
-                                        </option>
-                                    @endforeach
-                                    </select>                          
-                                </div>
-                                <div class="mb-3">
-                                    <label for="jumlah" class="form-label">Jumlah :</label>
-                                    <input type="number" class="form-control w-100" style="border-style: groove;" min="1" name="jumlah" id="jumlah" required>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary">Submit</button>
-                            </div>
-                        </form>
-                        </div>
-                    </div>
+                    @include('kasir.create')
                 </div>
                 <!-- End Tambah Transaksi -->
+
+                {{-- Bayar --}}
+                <div class="modal fade" id="modal-edit" tabindex="-1" aria-labelledby="EditModalLabel" aria-hidden="true">
+                    @include('kasir.bayar')
+                </div>
+                {{-- End Bayar --}}
 
             </div>
             <!-- ============================================================== -->
@@ -152,7 +165,7 @@
             <!-- footer -->
             <!-- ============================================================== -->
             @include('layout.footer')
-            
+
             <!-- ============================================================== -->
         </div>
         <!-- ============================================================== -->
@@ -167,6 +180,30 @@
     <!-- ============================================================== -->
     @include('layout.js')
     @include('sweetalert::alert')
+    <script>
+        $(document).ready(function() {
+        //edit data
+            $('.edit').on("click",function() {
+            var id = $(this).attr('data-id');
+            $.ajax({
+                    url : "{{route('editk')}}?id="+id,
+                    type: "GET",
+                    dataType: "JSON",
+                    success: function(data)
+                    {
+                    console.log(data);
+                    $('input[name="id"]').val(data.id);
+                    $('#nama_pelanggan').text(data.nama_pelanggan)
+                    $('#menu').text(data.nama_menu)
+                    $('#kuantitas').text(data.jumlah)
+                    $('#total_harga').text(data.harga_rp)
+                    $('#modal-edit').modal('show');
+                    }
+                });
+            });
+
+        });
+    </script>
 </body>
 
 </html>

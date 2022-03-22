@@ -25,12 +25,12 @@
         <!-- Topbar header - style you can find in pages.scss -->
         <!-- ============================================================== -->
         @include('layout.top')
-       
-        
+
+
         <!-- Left Sidebar - style you can find in sidebar.scss  -->
         <!-- ============================================================== -->
         @include('layout.sidebar')
-    
+
         <!-- Page wrapper  -->
         <!-- ============================================================== -->
         <div class="page-wrapper" style="min-height: 250px;">
@@ -41,21 +41,21 @@
                     <div class="row align-items-center">
                     <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
                         <h4 class="page-title">Laporan Transaksi</h4>
-                    </div>                   
+                    </div>
                     <div class="d-flex flex-row-reverse bd-highlight">
                         <div class="p-2 bd-highlight">
                             <a href="{{ route('PrintAll') }}" target="_blank" class="btn btn-info">
                             <i class="fa-solid fa-print"></i>
                             <span class="hide-menu">Print All</span>
                             </a>
-                        </div>    
+                        </div>
                         <div class="p-2 bd-highlight">
                             <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#print">
                                 <i class="fa-solid fa-print"></i>
                                 <span class="hide-menu">Print By Date</span>
                             </button>
-                        </div> 
-                    </div>  
+                        </div>
+                    </div>
                 </div>
                 <br>
                 <div class="card" style="width: 15rem; background:grey; color:white;">
@@ -100,7 +100,7 @@
                            {{$message}}
                         </div>
                     @endif
-                   
+
                     <table class="table table-striped table-hover">
                         <thead class="table-dark">
                             <tr>
@@ -112,6 +112,7 @@
                                 <th>Total</th>
                                 <th>Nama Pegawai</th>
                                 <th>Tanggal</th>
+                                <th>Status</th>
                             </tr>
                         </thead>
                         @foreach($report as $item)
@@ -123,43 +124,29 @@
                             <td>{{ number_format($item->jumlah) }}</td>
                             <td>RP.{{ number_format($item->total_harga) }}</td>
                             <td>{{ $item->nama_pegawai}}</td>
-                            <td>{{ $item->tanggal}}</td> 
-                        </tr>                           
+                            <td>{{ $item->tanggal}}</td>
+                            <td>
+                                @if ($item->bayar < $item->total_harga)
+                                    <span class="text-danger">Belum Bayar</span>
+                                @endif
+
+                                @if ($item->bayar >= $item->total_harga)
+                                    <span class="text-success">Sudah Bayar</span>
+                                @endif
+                            </td>
+                        </tr>
                         @endforeach
                     </table>
-                    {!! $report->links() !!}           
+                    {!! $report->links() !!}
                 </div>
                 <!-- ============================================================== -->
-                
+
                 <!-- modal -->
                 <div class="modal fade" id="print" tabindex="-1" aria-labelledby="PrintLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered">
-                        <div class="pop modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="PrintLabel">Print</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <form action="PrintCustom" target="blank" method="get">
-                                <div class="modal-body">
-                                        <div class="mb-3">
-                                            <label for="from" class="form-label">Date From</label>
-                                            <input type="date" name="from" class="form-control" id="from" >
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="to" class="form-label">Date To</label>
-                                            <input type="date" class="form-control" name="to" id="to">
-                                        </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                    <button type="submit" class="btn btn-primary">Print</button>
-                                </div>
-                            </form>   
-                        </div>   
-                    </div>
+                    @include('manager.print-modal')
                 </div>
                 <!-- End Modal -->
-            <!-- End PAge Content -->    
+            <!-- End PAge Content -->
             </div>
             <!-- ============================================================== -->
             <!-- End Container fluid  -->
@@ -168,7 +155,7 @@
             <!-- footer -->
             <!-- ============================================================== -->
             @include('layout.footer')
-            
+
             <!-- ============================================================== -->
         </div>
         <!-- ============================================================== -->

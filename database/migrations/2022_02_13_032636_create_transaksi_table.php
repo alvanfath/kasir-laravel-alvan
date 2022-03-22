@@ -19,7 +19,9 @@ return new class extends Migration
             $table->string('nama_menu');
             $table->integer('jumlah');
             $table->integer('harga');
-            $table->string('total_harga');
+            $table->integer('total_harga');
+            $table->integer('bayar')->nullable();
+            $table->integer('kembalian')->nullable();
             $table->string('nama_pegawai');
             $table->date('tanggal');
             $table->timestamps();

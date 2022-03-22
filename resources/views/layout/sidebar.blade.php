@@ -50,13 +50,6 @@
                         <!-- Only Kasir -->
                         @if (auth()->user()->role =="kasir")
                         <li class="sidebar-item pt-2">
-                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{route('menu')}}"
-                                aria-expanded="false">
-                                <i class="fa-solid fa-bars"></i>
-                                <span class="hide-menu">Data Menu</span>
-                            </a>
-                        </li>
-                        <li class="sidebar-item pt-2">
                             <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{route('indexk')}}"
                                 aria-expanded="false">
                                 <i class="fa-solid fa-cash-register"></i>
