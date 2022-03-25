@@ -54,7 +54,7 @@ class AdminController extends Controller
     public function updateuser(Request $request, $id)
     {
         $data= User::find($id);
-        
+
         $store= $data->update($request->all());
 
         if($store){
@@ -70,7 +70,7 @@ class AdminController extends Controller
     {
         $data= User::find($id);
         $delete= $data->delete();
-        
+
         if($delete){
         return redirect()->route('indexadmin')
         ->with('success','Berhasil Menghapus!');

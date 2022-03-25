@@ -17,18 +17,18 @@ class LoginController extends Controller
             'username' => ['required'],
             'password' => ['required'],
         ]);
- 
+
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
- 
+
             return redirect()->intended('dashboard');
         }
- 
+
         return back()->with('error', 'Opss there were some problems with your input.');
     }
 
     public function logout() {
         Auth::logout();
-        return redirect ('login');
+        return redirect ('/');
     }
 }

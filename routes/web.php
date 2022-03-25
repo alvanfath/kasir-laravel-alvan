@@ -20,7 +20,7 @@ use App\Http\Controllers\KasirController;
 */
 
 Route::get('/', function () {
-    return view('login.login');
+    return view('landing');
 });
 Route::group(['middleware' => ['auth','cek_role:admin,manager,kasir']], function(){
     Route::get('dashboard',[DashboardController::class, 'index'])->name('dashboard');

@@ -28,7 +28,7 @@
         box-shadow: 7px 5px 7px grey;
         height: 90%;
         width: 90%;
-        
+
       }
       .iy{
         border-radius: 30px;

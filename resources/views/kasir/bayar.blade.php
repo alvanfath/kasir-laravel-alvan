@@ -10,7 +10,7 @@
         <div class="modal-body">
             <input type="hidden" id="id" name="id">
             <h6>Customer = <span id="nama_pelanggan"></span></h6>
-            <h6>Menu = <span id="menu"></span></h6>
+            <h6>Menu = <span id="nm"></span></h6>
             <h6>Kuantitas = <span id="kuantitas"></span></h6>
             <h6>Total = <span id="total_harga"></span></h6>
             <div class="mb-3">

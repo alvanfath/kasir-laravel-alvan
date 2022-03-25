@@ -194,7 +194,7 @@
                     console.log(data);
                     $('input[name="id"]').val(data.id);
                     $('#nama_pelanggan').text(data.nama_pelanggan)
-                    $('#menu').text(data.nama_menu)
+                    $('#nm').text(data.nama_menu)
                     $('#kuantitas').text(data.jumlah)
                     $('#total_harga').text(data.harga_rp)
                     $('#modal-edit').modal('show');
