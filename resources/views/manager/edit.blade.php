@@ -1,7 +1,7 @@
 <div class="modal-dialog modal-dialog-centered">
     <div class="pop modal-content">
     <div class="modal-header">
-        <h5 class="modal-title" id="addLabel">Add Menu</h5>
+        <h5 class="modal-title" id="addLabel">Edit Menu</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
     </div>
     <form action="{{ route('updatem') }}" method="POST" enctype="multipart/form-data">

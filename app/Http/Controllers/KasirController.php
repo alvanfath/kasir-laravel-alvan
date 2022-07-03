@@ -20,8 +20,7 @@ class KasirController extends Controller
 
     public function createk()
     {
-        $menu= Menu::all();
-        return view('kasir.create', compact('menu'));
+        
     }
 
     public function storek(Request $request)
